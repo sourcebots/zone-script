@@ -48,17 +48,21 @@ def poll(robot_root_path, zone_id, stop_event: Event = Event()):
 
 def main():
     path = Path(os.path.dirname(os.path.realpath(__file__)))
+
     # Get all files named zone-1, zone-2, etc..
     id_files = glob.glob(str(path / "zone-*"))
     if not id_files:
         print("Could not find any zone ids (files like zone-1 or zone-0)")
         exit(0)
+
     id_file = id_files[0]
     if len(id_files) > 1:
         print("Warning, found more than 1 zone file!")
+
     # Get the first number in the filename
     zone_id = int(re.search(r'\d', id_file).group(0))
     print("ID:", zone_id)
+
     poll("/var/robotd/", zone_id)
 
 
