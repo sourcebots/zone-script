@@ -32,9 +32,10 @@ def poll(robot_root_path, zone_id, stop_event: Event = Event()):
 
             if state is State.MESSAGE:
                 sock.sendall(message)
-                resp = sock.recv(2048)
-                resp = json.loads(resp.decode('utf-8'))
-                if 'zone' in resp and resp['zone'] == zone_id:
+                response_data = sock.recv(2048).decode('utf-8')
+                response_message = json.loads(response_data)
+
+                if 'zone' in response_message and response_message['zone'] == zone_id:
                     print("done")
                     state = State.DONE
                 else:
