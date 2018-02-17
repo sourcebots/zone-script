@@ -1,10 +1,12 @@
+import glob
 import json
+import os
+import re
 import socket
 import time
-
 from enum import Enum
+from pathlib import Path
 from threading import Event
-
 
 sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
@@ -44,11 +46,7 @@ def poll(robot_root_path, zone_id, stop_event: Event = Event()):
             state = State.CONNECT
 
 
-if __name__ == "__main__":
-    import os
-    import glob
-    import re
-    from pathlib import Path
+def main():
     path = Path(os.path.dirname(os.path.realpath(__file__)))
     # Get all files named zone-1, zone-2, etc..
     id_files = glob.glob(str(path / "zone-*"))
@@ -62,3 +60,7 @@ if __name__ == "__main__":
     zone_id = int(re.search(r'\d', id_file).group(0))
     print("ID:", zone_id)
     poll("/var/robotd/", zone_id)
+
+
+if __name__ == "__main__":
+    main()
