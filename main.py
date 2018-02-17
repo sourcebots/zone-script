@@ -1,6 +1,5 @@
 import glob
 import json
-import os
 import re
 import socket
 import time
@@ -52,10 +51,10 @@ def poll(robot_root_path, zone_id, stop_event: Event = Event()):
 
 
 def main():
-    path = Path(os.path.dirname(os.path.realpath(__file__)))
+    my_dir = Path(__file__).parent
 
     # Get all files named zone-1, zone-2, etc..
-    id_files = glob.glob(str(path / "zone-*"))
+    id_files = glob.glob(str(my_dir / "zone-*"))
     if not id_files:
         print("Could not find any zone ids (files like zone-1 or zone-0)")
         exit(0)
