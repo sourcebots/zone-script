@@ -18,7 +18,11 @@ class State(Enum):
 
 
 def poll(robot_root_path, zone_id, stop_event: Event = Event()):
-    message = '{{"zone":{}, "mode":"competition"}}\n'.format(zone_id).encode('utf-8')
+    message = json.dumps({
+        'zone': zone_id,
+        'mode': 'competition',
+    }).encode('utf-8')
+
     state = State.CONNECT
     while not stop_event.is_set():
         try:
