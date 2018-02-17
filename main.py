@@ -16,7 +16,7 @@ class State(Enum):
     DONE = 3
 
 
-def poll(robot_root_path, zone_id, stop_event: Event = Event()):
+def poll(robot_root_path: str, zone_id: int, stop_event: Event=Event()) -> None:
     message = json.dumps({
         'zone': zone_id,
         'mode': 'competition',
@@ -50,7 +50,7 @@ def poll(robot_root_path, zone_id, stop_event: Event = Event()):
             state = State.CONNECT
 
 
-def main():
+def main() -> None:
     my_dir = Path(__file__).parent
 
     # Get all files named zone-1, zone-2, etc..
