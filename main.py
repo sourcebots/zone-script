@@ -64,7 +64,11 @@ def main() -> None:
         print("Warning, found more than 1 zone file!")
 
     # Get the first number in the filename
-    zone_id = int(re.search(r'\d', id_file).group(0))
+    zone_number_match = re.search(r'\d', id_file)
+    if zone_number_match is None:
+        exit("No zone id number found in filename {!r}".format(id_file))
+
+    zone_id = int(zone_number_match.group(0))
     print("ID:", zone_id)
 
     poll("/var/robotd/", zone_id)
